@@ -140,6 +140,10 @@ class JaegerMongoDbCommandConvertor implements JaegerMongoDbCommandConvertorInte
         $result = 'db.runCommand({';
         foreach ($command as $k => $v) {
             switch ($k) {
+                case 'lsid':
+                case 'txnNumber':
+                    continue 2;
+
                 case 'updates':
                 case 'deletes':
                     $tVal = $this->transformUpdatesDeletes($v);
