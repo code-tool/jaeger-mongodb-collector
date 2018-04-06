@@ -26,11 +26,11 @@ final class CommandToStringConvertorTest extends TestCase
                 'db.runCommand({query: {player_id: {$in: [\'...\']}}})'
             ],
             [
-                new OVal(
+                ov(
                     'query',
-                    new OVal(
+                    ov(
                         'c',
-                        new OVal('$gte', new UTCDateTime(1000000), '$lte', '$now')
+                        ov('$gte', new UTCDateTime(1000000), '$lte', '$now')
                     )
                 ),
                 'db.runCommand({query: {c: {$gte: new UTCDateTime(?), $lte: "$now"}}})'
