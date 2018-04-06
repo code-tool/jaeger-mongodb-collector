@@ -2,7 +2,14 @@
 
 namespace CodeTool\Jaeger\Tests\MongoDb;
 
-function ov(...$kv)
+function ov(...$kv): object
 {
-    return new OVal(...$kv);
+    $result = new \stdClass();
+
+    for ($i = 0; $i <= (int)(\count($kv) / 2) - 1; $i++) {
+        $result->{current($kv)} = next($kv);
+        next($kv);
+    }
+
+    return $result;
 }
