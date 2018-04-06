@@ -10,19 +10,19 @@ use PHPUnit\Framework\TestCase;
 
 final class CommandToStringConvertorTest extends TestCase
 {
-    public function dataProvider()
+    public function dataProvider(): array
     {
         return [
             [
-                ['query' => ['player_id' => 34]],
+                ov('query', ov('player_id', 34)),
                 'db.runCommand({query: {player_id: ?}})'
             ],
             [
-                ['query' => ['player_id' => '34']],
+                ov('query', ov('player_id', '34')),
                 'db.runCommand({query: {player_id: "?"}})'
             ],
             [
-                ['query' => ['player_id' => ['$in' => ['34', '343']]]],
+                ov('query', ov('player_id', ov('$in', ['34', '343']))),
                 'db.runCommand({query: {player_id: {$in: [\'...\']}}})'
             ],
             [
@@ -38,26 +38,16 @@ final class CommandToStringConvertorTest extends TestCase
         ];
     }
 
-    private function array2object($array)
-    {
-        return json_decode(json_encode($array));
-    }
-
     /**
      * @dataProvider dataProvider
      *
-     * @param array|\stdClass $command
-     * @param string          $expected
+     * @param object $command
+     * @param string $expected
      */
-    public function testConvert($command, string $expected): void
+    public function testConvert(object $command, string $expected): void
     {
         $convertor = new JaegerMongoDbCommandConvertor();
 
-        $data = $command;
-        if (\is_array($command)) {
-            $data = $this->array2object($command);
-        }
-
-        $this->assertEquals($expected, $convertor->convert($data));
+        $this->assertEquals($expected, $convertor->convert($command));
     }
 }
