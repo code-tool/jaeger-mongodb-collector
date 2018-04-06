@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace CodeTool\Jaeger\MongoDb;
 
@@ -30,11 +30,11 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
     private $requestIdToSpan = [];
 
     /**
-     * @var CommandToStringConvertor
+     * @var JaegerMongoDbCommandConvertorInterface
      */
     private $convertor;
 
-    public function __construct(TracerInterface $tracer, CommandToStringConvertor $convertor)
+    public function __construct(TracerInterface $tracer, JaegerMongoDbCommandConvertorInterface $convertor)
     {
         $this->tracer = $tracer;
         $this->convertor = $convertor;

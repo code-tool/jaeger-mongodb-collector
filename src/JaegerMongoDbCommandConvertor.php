@@ -6,7 +6,7 @@ namespace CodeTool\Jaeger\MongoDb;
 
 use MongoDB\BSON\Type;
 
-class CommandToStringConvertor
+class JaegerMongoDbCommandConvertor implements JaegerMongoDbCommandConvertorInterface
 {
     /**
      * @var int

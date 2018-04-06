@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace CodeTool\Jaeger\Tests\MongoDb;
 
-use CodeTool\Jaeger\MongoDb\CommandToStringConvertor;
+use CodeTool\Jaeger\MongoDb\JaegerMongoDbCommandConvertor;
 use MongoDB\BSON\UTCDateTime;
 use PHPUnit\Framework\TestCase;
 
@@ -51,7 +51,7 @@ final class CommandToStringConvertorTest extends TestCase
      */
     public function testConvert($command, string $expected): void
     {
-        $convertor = new CommandToStringConvertor();
+        $convertor = new JaegerMongoDbCommandConvertor();
 
         $data = $command;
         if (\is_array($command)) {

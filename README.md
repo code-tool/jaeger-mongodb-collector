@@ -6,7 +6,7 @@ How to use
 \MongoDB\Driver\Monitoring\addSubscriber(
     new \CodeTool\Jaeger\MongoDb\JaegerMongoDbQueryTimeCollector(
         $tracer,
-        new \CodeTool\Jaeger\MongoDb\CommandToStringConvertor()
+        new \CodeTool\Jaeger\MongoDb\JaegerMongoDbCommandConvertor()
     )
 );
 ```
