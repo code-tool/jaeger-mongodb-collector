@@ -116,7 +116,7 @@ class JaegerMongoDbCommandConvertor implements JaegerMongoDbCommandConvertorInte
                     $tVal = $this->transformQuery($v);
                     break;
                 default:
-                    $tVal = json_encode($v);
+                    $tVal = \json_encode($v);
             }
 
             $result .= $k . ': ' . $tVal . ', ';
@@ -145,9 +145,12 @@ class JaegerMongoDbCommandConvertor implements JaegerMongoDbCommandConvertorInte
                     $tVal = $this->transformUpdatesDeletes($v);
                     break;
 
+                case 'documents':
+                    $tVal = '[' . \substr(\str_repeat('?,', \count($v)), 0, -1) . ']';
+                    break;
+
                 case 'query':
                 case 'filter':
-                case 'documents':
                     $tVal = $this->transformQuery($v);
                     break;
 
@@ -155,7 +158,7 @@ class JaegerMongoDbCommandConvertor implements JaegerMongoDbCommandConvertorInte
                     $tVal = $this->serializeWriteConcern($v);
                     break;
                 default:
-                    $tVal = json_encode($v);
+                    $tVal = \json_encode($v);
             }
 
             if ('' === $tVal) {
