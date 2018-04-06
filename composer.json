@@ -1,4 +1,6 @@
 {
+  "package": "code-tool/jaeger-mongodb-collector",
+  "license": "MIT",
   "require": {
     "php": "^7.2",
     "ext-mongodb": "*",
