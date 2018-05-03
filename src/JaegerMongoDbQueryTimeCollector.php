@@ -11,6 +11,7 @@ use Jaeger\Tag\ComponentTag;
 use Jaeger\Tag\DbInstanceTag;
 use Jaeger\Tag\DbStatementTag;
 use Jaeger\Tag\DbType;
+use Jaeger\Tag\ErrorTag;
 use Jaeger\Tag\PeerHostnameTag;
 use Jaeger\Tag\PeerPortTag;
 use Jaeger\Tag\SpanKindClientTag;
@@ -80,7 +81,7 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
             return;
         }
 
-        $span->addTag(new BoolTag('error', true));
+        $span->addTag(new ErrorTag());
         $span->addLog(new ErrorLog($event->getError()->getMessage(), $event->getError()->getTraceAsString()));
 
         $this->tracer->finish($span, $event->getDurationMicros());
