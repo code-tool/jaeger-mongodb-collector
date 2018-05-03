@@ -94,7 +94,7 @@ class JaegerMongoDbCommandConvertor implements JaegerMongoDbCommandConvertorInte
 
         $result = '{w: ' . $this->simpleScalarToJson($writeConcern->w);
         if (isset($writeConcern->j)) {
-            $result .= ', j: ' . $this->simpleScalarToJson($writeConcern->wtimeout);
+            $result .= ', j: ' . $this->simpleScalarToJson($writeConcern->j);
         }
 
         if (isset($writeConcern->wtimeout)) {
