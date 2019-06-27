@@ -1,12 +1,10 @@
 <?php
-
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace CodeTool\Jaeger\MongoDb;
 
 use Jaeger\Log\ErrorLog;
 use Jaeger\Span\SpanInterface;
-use Jaeger\Tag\BoolTag;
 use Jaeger\Tag\ComponentTag;
 use Jaeger\Tag\DbInstanceTag;
 use Jaeger\Tag\DbStatementTag;
@@ -45,17 +43,14 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
     {
         /** @var MongoDB\Driver\Server $server */
         $server = $event->getServer();
-
         $this->requestIdToSpan[$event->getRequestId()] = $this->tracer->start(
             sprintf('mongodb.%s', $event->getCommandName()),
             [
                 new SpanKindClientTag(),
                 new ComponentTag('php-mongodb'),
-
                 new DbType('mongo'),
                 new DbInstanceTag($event->getDatabaseName()),
                 new DbStatementTag($this->convertor->convert($event->getCommand())),
-
                 new PeerHostnameTag($server->getHost()),
                 new PeerPortTag($server->getPort()),
             ]
@@ -68,7 +63,6 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
             // warning, should not happen!
             return null;
         }
-
         $span = $this->requestIdToSpan[$event->getRequestId()];
         unset($this->requestIdToSpan[$event->getRequestId()]);
 
@@ -80,11 +74,9 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
         if (null === $span = $this->getSpanByEvent($event)) {
             return;
         }
-
         $span->addTag(new ErrorTag());
         $span->addLog(new ErrorLog($event->getError()->getMessage(), $event->getError()->getTraceAsString()));
-
-        $this->tracer->finish($span, $event->getDurationMicros());
+        $span->finish($event->getDurationMicros());
     }
 
     public function commandSucceeded(CommandSucceededEvent $event)
@@ -92,7 +84,6 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
         if (null === $span = $this->getSpanByEvent($event)) {
             return;
         }
-
-        $this->tracer->finish($span, $event->getDurationMicros());
+        $span->finish($event->getDurationMicros());
     }
 }
