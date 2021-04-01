@@ -4,7 +4,7 @@
   "type": "library",
   "license": "MIT",
   "require": {
-    "php": "^7.2",
+    "php": "^7.2 || ^8.0",
     "ext-mongodb": "*",
     "code-tool/jaeger-client-php": "^3"
   },
@@ -22,6 +22,6 @@
     ]
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.5.5"
+    "phpunit/phpunit": "^9.0"
   }
 }
