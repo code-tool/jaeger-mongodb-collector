@@ -39,7 +39,7 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
         $this->convertor = $convertor;
     }
 
-    public function commandStarted(CommandStartedEvent $event)
+    public function commandStarted(CommandStartedEvent $event): void
     {
         /** @var MongoDB\Driver\Server $server */
         $server = $event->getServer();
@@ -69,7 +69,7 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
         return $span;
     }
 
-    public function commandFailed(CommandFailedEvent $event)
+    public function commandFailed(CommandFailedEvent $event): void
     {
         if (null === $span = $this->getSpanByEvent($event)) {
             return;
@@ -79,7 +79,7 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
         $span->finish($event->getDurationMicros());
     }
 
-    public function commandSucceeded(CommandSucceededEvent $event)
+    public function commandSucceeded(CommandSucceededEvent $event): void
     {
         if (null === $span = $this->getSpanByEvent($event)) {
             return;
