@@ -5,7 +5,7 @@
   "license": "MIT",
   "require": {
     "php": "^7.2 || ^8.0",
-    "ext-mongodb": "*",
+    "ext-mongodb": "^1.20.0 || ^2.0.0",
     "code-tool/jaeger-client-php": "^3"
   },
   "autoload": {
