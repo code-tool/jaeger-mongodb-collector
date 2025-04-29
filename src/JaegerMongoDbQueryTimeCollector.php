@@ -41,8 +41,6 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
 
     public function commandStarted(CommandStartedEvent $event): void
     {
-        /** @var MongoDB\Driver\Server $server */
-        $server = $event->getServer();
         $this->requestIdToSpan[$event->getRequestId()] = $this->tracer->start(
             sprintf('mongodb.%s', $event->getCommandName()),
             [
@@ -51,8 +49,8 @@ class JaegerMongoDbQueryTimeCollector implements CommandSubscriber
                 new DbType('mongo'),
                 new DbInstanceTag($event->getDatabaseName()),
                 new DbStatementTag($this->convertor->convert($event->getCommand())),
-                new PeerHostnameTag($server->getHost()),
-                new PeerPortTag($server->getPort()),
+                new PeerHostnameTag($event->getHost()),
+                new PeerPortTag($event->getPort()),
             ]
         );
     }
